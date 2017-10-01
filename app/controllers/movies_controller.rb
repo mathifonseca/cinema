@@ -1,3 +1,6 @@
+require 'uri'
+require 'net/http'
+
 class MoviesController < ApplicationController
 
   def index
@@ -37,6 +40,23 @@ class MoviesController < ApplicationController
     @movie.destroy
     flash[:notice] = "Movie '#{@movie.title}' deleted."
     redirect_to movies_path
+  end
+
+  def search
+    url = URI("https://api.themoviedb.org/3/search/movie?include_adult=false&page=1&query=star&language=en-US&api_key=4883683d8402af2dfc264b8d1fc64316")
+
+    http = Net::HTTP.new(url.host, url.port)
+    http.use_ssl = true
+    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+    request = Net::HTTP::Get.new(url)
+    request.body = "{}"
+
+    response = http.request(request)
+
+    arr = JSON.parse(response.read_body)
+
+    puts arr
   end
 
   private

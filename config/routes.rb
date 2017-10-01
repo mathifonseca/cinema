@@ -3,6 +3,8 @@ Rails.application.routes.draw do
 
   resources :movies
 
+  get 'search', to: 'movies#search'
+
   root :to => redirect('/movies')
 
 end
