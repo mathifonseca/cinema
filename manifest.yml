@@ -1,0 +1,5 @@
+---
+applications:
+- name: CinemaExampleORT
+  random-route: true
+  memory: 256M
